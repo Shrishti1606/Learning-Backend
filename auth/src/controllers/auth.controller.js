@@ -5,6 +5,16 @@ async function registerUser(req, res){
 
     const { username, email, password } =req.body;
 
+    const isUserAlreadyPresent = await userModel.findOne({
+        email
+    })
+
+    if(isUserAlreadyPresent){
+        return res.status(409).json({
+            message: "user already present with this email"
+        })
+    }
+
     const user = await userModel.create({
         username, email, password
     })
@@ -13,10 +23,11 @@ async function registerUser(req, res){
         id: user._id,
     }, process.env.JWT_SECRET);
 
+    res.cookie("token", token);
+
     res.status(201).json({
         message: "user registered successfully",
         user,
-        token,
     })
 
 }
