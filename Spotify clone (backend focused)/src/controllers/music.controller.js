@@ -19,7 +19,7 @@ const createMusic = async (req, res) => {
         })
 
         res.status(201).json({
-            message: 'Music created successfully',
+            message: 'music created successfully',
             music: {
                 id: music._id,
                 uri: music.uri,
@@ -27,7 +27,6 @@ const createMusic = async (req, res) => {
                 artist: music.artist
             }
         });
-
 }
 
 const createAlbum = async (req, res) => {
@@ -41,22 +40,23 @@ const createAlbum = async (req, res) => {
         });
 
         res.status(201).json({
-            message: 'Album created successfully',
+            message: 'album created successfully',
             album: {
                 id: album._id,
                 title: album.title,
                 music: album.music,
                 artist: album.artist
             }
-        }); 
+        });
+        
 }
 
 const getAllMusics = async (req, res) => {
 
-    const musics = await musicModel.find().limit(2).populate('artist', 'username')
+    const musics = await musicModel.find().populate('artist', 'username')
 
     res.status(200).json({
-        message: 'Musics retrieved successfully',
+        message: 'musics retrieved successfully',
         musics: musics
     })
 }
@@ -66,7 +66,7 @@ const getAllAlbums = async (req, res) => {
     const albums = await albumModel.find().select('title artist').populate('artist', 'username')
 
     res.status(200).json({
-        message: 'Albums retrieved successfully',
+        message: 'albums retrieved successfully',
         albums: albums
     })
 }
